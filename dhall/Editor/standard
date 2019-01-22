@@ -1,0 +1,32 @@
+let Editor = ./Type
+
+in  -- Standard calling convention `command file [+line]`; it is supported by:
+    --
+    -- * Pico
+    -- * Nano
+    -- * Vi/Vim/Neovim
+    -- * Emacs
+    --
+    -- And possibly others.
+    ( λ(command : Text)
+    → λ(file : Optional {file : Text, line : Natural})
+    →   { command =
+            command
+        , arguments =
+            Optional/fold
+              {file : Text, line : Natural}
+              file
+              (List Text)
+              ( λ(value : {file : Text, line : Natural})
+              →   ( if Natural/isZero value.line
+                      then [] : List Text
+                      else ["+${Natural/show value.line}"]
+                  )
+                # [ value.file
+                  ]
+              )
+              ([] : List Text)
+        }
+    ) : ∀(command : Text) → Editor
+
+-- vim: ft=dhall

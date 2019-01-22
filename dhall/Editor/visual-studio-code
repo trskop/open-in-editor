@@ -1,0 +1,31 @@
+let Editor = ./Type
+
+in  -- Variation of `colon-separated` convention:
+    --
+    -- ```
+    -- {-g|--goto} file:line[:column]
+    -- ```
+    --
+    -- VSCode documentation states that without `--goto` it will treat
+    -- `file:line[:column]` as a filename that contains `:` character(s).
+    --
+    -- Source: <https://code.visualstudio.com/docs/editor/command-line>
+    ( λ(command : Optional Text)
+    → λ(file : Optional {file : Text, line : Natural})
+    →   { command =
+            Optional/fold Text command Text (λ(cmd : Text) → cmd) "code"
+        , arguments =
+            Optional/fold
+              {file : Text, line : Natural}
+              file
+              (List Text)
+              ( λ(value : {file : Text, line : Natural})
+              → if Natural/isZero value.line
+                  then [value.file]
+                  else ["--goto", "${value.file}:${Natural/show value.line}"]
+              )
+              ([] : List Text)
+        }
+    ) : ∀(command : Optional Text) → Editor
+
+-- vim: ft=dhall

@@ -1,0 +1,27 @@
+let Editor = ./Type
+
+in  -- Calling convention `command file[:line[:column]` is supported by
+    -- following editors:
+    --
+    -- * Atom
+    --   <https://flight-manual.atom.io/getting-started/sections/atom-basics/>
+    -- * Sublime
+    --   <http://docs.sublimetext.info/en/latest/command_line/command_line.html>
+    ( λ(command : Text)
+    → λ(file : Optional {file : Text, line : Natural})
+    →   { command = command
+        , arguments =
+            Optional/fold
+              {file : Text, line : Natural}
+              file
+              (List Text)
+              ( λ(value : {file : Text, line : Natural})
+              → if Natural/isZero value.line
+                  then [value.file]
+                  else ["${value.file}:${Natural/show value.line}"]
+              )
+              ([] : List Text)
+        }
+    ) : ∀(command : Text) → Editor
+
+-- vim: ft=dhall

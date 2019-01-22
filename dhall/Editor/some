@@ -1,0 +1,21 @@
+let Editor = ./Type
+
+in  -- Open file in an editor, however, since we don't know what kind of
+    -- calling convention this editor uses, we are ignoring line number.  What
+    -- we end up with is just `command file`.
+    ( λ(command : Text)
+    → λ(file : Optional {file : Text, line : Natural})
+    →   { command = command
+        , arguments =
+            Optional/fold
+              {file : Text, line : Natural}
+              file
+              (List Text)
+              ( λ(value : {file : Text, line : Natural})
+              → [value.file]
+              )
+              ([] : List Text)
+        }
+    ) : ∀(command : Text) → Editor
+
+-- vim: ft=dhall

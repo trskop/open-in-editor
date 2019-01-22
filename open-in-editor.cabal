@@ -1,0 +1,46 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.31.1.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: 80c3241fedc75f9f77dbe564b600d8a9b2c7ae2507d28b5d2f14c3cced1731c9
+
+name:           open-in-editor
+version:        0.1.0.0
+synopsis:       Open editor based on user preferences
+description:    Open editor based on user preferences
+category:       Command Line, Editor, Text
+author:         Peter Trško
+maintainer:     peter.trsko@gmail.com
+copyright:      (c) 2019 Peter Trško
+license:        BSD3
+license-file:   LICENSE
+build-type:     Simple
+extra-source-files:
+    README.md
+    dhall/Editor/colon-separated
+    dhall/Editor/some
+    dhall/Editor/standard
+    dhall/Editor/Type
+    dhall/Editor/visual-studio-code
+
+library
+  exposed-modules:
+      System.Command.LookupStrategy
+      System.Editor
+  other-modules:
+      Paths_open_in_editor
+  hs-source-dirs:
+      src
+  default-extensions: BlockArguments DefaultSignatures DeriveAnyClass DeriveFoldable DeriveFunctor DeriveGeneric DeriveTraversable DerivingStrategies DuplicateRecordFields FlexibleContexts FlexibleInstances GeneralizedNewtypeDeriving InstanceSigs LambdaCase MultiWayIf NamedFieldPuns OverloadedStrings RankNTypes RecordWildCards ScopedTypeVariables TupleSections TypeApplications
+  ghc-options: -Wall
+  build-depends:
+      base
+    , dhall >=1.23
+    , directory
+    , process
+    , text
+    , transformers
+    , unix
+  default-language: Haskell2010

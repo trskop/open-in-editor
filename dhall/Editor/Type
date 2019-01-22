@@ -1,0 +1,4 @@
+  ∀(file : Optional { file : Text, line : Natural })
+→ { command : Text, arguments : List Text }
+
+-- vim: ft=dhall
