@@ -1,10 +1,10 @@
 cabal-version: 1.12
 
--- This file has been generated from package.yaml by hpack version 0.31.1.
+-- This file has been generated from package.yaml by hpack version 0.33.0.
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 80c3241fedc75f9f77dbe564b600d8a9b2c7ae2507d28b5d2f14c3cced1731c9
+-- hash: f4f74c6ec2e6b828e83c1ab67d642a167b3be34c452ec41f16c879f7706aee78
 
 name:           open-in-editor
 version:        0.1.0.0
@@ -20,6 +20,7 @@ build-type:     Simple
 extra-source-files:
     README.md
     dhall/Editor/colon-separated
+    dhall/Editor/package.dhall
     dhall/Editor/some
     dhall/Editor/standard
     dhall/Editor/Type

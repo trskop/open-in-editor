@@ -1,5 +1,8 @@
 let Editor = ./Type
 
+let optional =
+       https://prelude.dhall-lang.org/v17.0.0/Optional/fold sha256:c5b9d72f6f62bdaa0e196ac1c742cc175cd67a717b880fb8aec1333a5a4132cf
+
 in  -- Standard calling convention `command file [+line]`; it is supported by:
     --
     -- * Pico
@@ -13,7 +16,7 @@ in  -- Standard calling convention `command file [+line]`; it is supported by:
     →   { command =
             command
         , arguments =
-            Optional/fold
+            optional
               {file : Text, line : Natural}
               file
               (List Text)

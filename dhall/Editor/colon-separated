@@ -1,4 +1,11 @@
-let Editor = ./Type
+-- vim: filetype=dhall
+
+let Editor =
+        ./Type sha256:c23fce3a760911fd7d8822dffdd537cfb45d1095f44a091d6fb2c7115cd735b0
+      ? ./Type
+
+let optional =
+      https://prelude.dhall-lang.org/v17.0.0/Optional/fold sha256:c5b9d72f6f62bdaa0e196ac1c742cc175cd67a717b880fb8aec1333a5a4132cf
 
 in  -- Calling convention `command file[:line[:column]` is supported by
     -- following editors:
@@ -7,21 +14,20 @@ in  -- Calling convention `command file[:line[:column]` is supported by
     --   <https://flight-manual.atom.io/getting-started/sections/atom-basics/>
     -- * Sublime
     --   <http://docs.sublimetext.info/en/latest/command_line/command_line.html>
-    ( λ(command : Text)
-    → λ(file : Optional {file : Text, line : Natural})
-    →   { command = command
-        , arguments =
-            Optional/fold
-              {file : Text, line : Natural}
-              file
-              (List Text)
-              ( λ(value : {file : Text, line : Natural})
-              → if Natural/isZero value.line
-                  then [value.file]
-                  else ["${value.file}:${Natural/show value.line}"]
-              )
-              ([] : List Text)
-        }
-    ) : ∀(command : Text) → Editor
-
--- vim: ft=dhall
+      ( λ(command : Text) →
+        λ(file : Optional { file : Text, line : Natural }) →
+          { command
+          , arguments =
+              optional
+                { file : Text, line : Natural }
+                file
+                (List Text)
+                ( λ(value : { file : Text, line : Natural }) →
+                    if    Natural/isZero value.line
+                    then  [ value.file ]
+                    else  [ "${value.file}:${Natural/show value.line}" ]
+                )
+                ([] : List Text)
+          }
+      )
+    : ∀(command : Text) → Editor
